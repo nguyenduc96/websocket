@@ -1,0 +1,60 @@
+cp:
+  service:
+    gateway:
+
+  data:
+    gw:
+      redis:
+        host: localhost
+        port: 6379
+        password: 
+        
+zuul:
+  routes:
+    websocket:
+      service-id: websocket
+      path: /
+    meshService:
+      serviceId: mesh-service
+      path: /
+#      url: forward:/
+    servicesGreeting:
+      serviceId: greeting
+      path: /greeting
+    servicesBSC:
+      serviceId: bsc
+      path: /bsc
+    sample:
+      serviceId: sample
+      path: /sample
+  ratelimit:
+    enabled: true
+    key-prefix: APIGW_FULLNODE_RATELIMIT_
+    repository: REDIS
+    behind-proxy: true
+    add-response-headers: true
+    policy-list:
+      servicesGreeting:
+      - limit: 5
+        refresh-interval: 60
+        type:
+        - origin
+      servicesBSC:
+      - limit: 100
+        refresh-interval: 60
+        type:
+        - origin
+      sample:
+      - limit: 100
+        refresh-interval: 60
+        type:
+        - origin
+  strip-prefix: true
+  sensitive-headers:
+    - Connection,Upgrade
+
+spring:
+  application:
+    name: apigw-fullnode
+    
+
