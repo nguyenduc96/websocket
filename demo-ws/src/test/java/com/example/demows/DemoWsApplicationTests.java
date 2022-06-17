@@ -1,10 +1,10 @@
-package com.nguyenduc.websockets;
+package com.example.demows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AppTests {
+class DemoWsApplicationTests {
 
     @Test
     void contextLoads() {
